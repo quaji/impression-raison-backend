@@ -1,4 +1,5 @@
 from flask import *
+from user_auth.Members import Members
 class App:
     __app :Flask
 
