@@ -7,7 +7,7 @@ class App:
     def __init__(self, debugMode):
         print("app instance generate.")
         self.__app = Flask(__name__)
-        CORS(self.__app)
+        CORS(self.__app,origins=["https://your-frontend-app.azurewebsites.net"])
         self.__app.debug = debugMode
 
     def run(self):

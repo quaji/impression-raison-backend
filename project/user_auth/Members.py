@@ -5,7 +5,7 @@ import pyodbc
 class Members:
     def __init__(self):
         self.__blueprint = Blueprint('sign', __name__, url_prefix='/sign')
-        CORS(self.__blueprint)
+        CORS(self.__blueprint,origins=["https://your-frontend-app.azurewebsites.net"])
         self.__setDBStatus()
         self.__sign()
 
