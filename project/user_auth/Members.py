@@ -43,8 +43,10 @@ class Members:
 
         @self.__blueprint.route('/auth', methods=['GET'])
         def authorization():
-            return jsonify({"uid":session["uid"]})
-
+            if session["uid"]:
+                return jsonify({"uid":session["uid"]})
+            else:
+                return jsonify({"uid":0})
 
         @self.__blueprint.route('/in', methods=['POST'])
         def signin():
