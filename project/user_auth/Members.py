@@ -41,6 +41,11 @@ class Members:
             except Exception as e:
                 return jsonify({'message': f'Error occurred: {str(e)}'}), 1001
 
+        @self.__blueprint.route('/auth', methods=['GET'])
+        def authorization():
+            return jsonify({"uid":session["uid"]})
+
+
         @self.__blueprint.route('/in', methods=['POST'])
         def signin():
             try:
