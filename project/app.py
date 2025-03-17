@@ -12,4 +12,4 @@ class App:
 
     def run(self):
         print("run method in app instance start")
-        self.__app.run()
+        self.__app.run(host="0.0.0.0",port=8000)
