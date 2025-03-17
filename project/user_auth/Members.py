@@ -35,18 +35,17 @@ class Members:
                 existingData = self.cursor.fetchone()
                 if existingData:
                     session["email"] = existingData.email
-                    return redirect(url_for("sign.in"))
+                    return redirect("https://passwordを認証するページ")
                 else:
-                    return redirect(url_for("sign.up"))
+                    return redirect("https://passwordを設定するページ")
             except Exception as e:
                 return jsonify({'message': f'Error occurred: {str(e)}'}), 1001
 
         @self.__blueprint.route('/in', methods=['POST'])
         def signin():
             try:
-                # セッションにemailがない場合、再度認証ページへリダイレクト
                 if "email" not in session:
-                    return redirect(url_for("sign.auth"))
+                    return redirect("https://emailを入力するページ")
 
                 usrPass: dict = request.get_json()
                 password: str = usrPass["password"]
