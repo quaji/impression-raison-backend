@@ -1,5 +1,5 @@
 from flask import *
-from user_auth.Members import Members
+from project.user_auth.Members import Members
 from flask_cors import *
 class App:
     __app :Flask
