@@ -46,7 +46,7 @@ class Members:
 
         @self.__blueprint.route('/auth', methods=['GET'])
         def authorization():
-            if session["uid"]:
+            if "uid" in session:
                 return jsonify({"uid":session["uid"]})
             else:
                 return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
