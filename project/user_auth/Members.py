@@ -24,7 +24,7 @@ class Members:
     def __sign(self):
         @self.__blueprint.route('/auth', methods=['GET'])
         def authorization():
-            return jsonify({"message":"hello"})
+            return jsonify({"message":"hello"}),200
             # if "uid" in session:
             #     return jsonify({"uid":session["uid"]})
             # else:
