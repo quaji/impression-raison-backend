@@ -1,6 +1,6 @@
 from flask import *
 from flask_cors import *
-from BlueprintManager import BlueprintManager
+from project.BlueprintManager import BlueprintManager
 
 class App:
     __app :Flask

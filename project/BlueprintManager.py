@@ -1,5 +1,5 @@
 from flask import Blueprint
-from user_auth.Members import Members
+from project.user_auth.Members import Members
 
 class BlueprintManager:
     def __init__(self):
