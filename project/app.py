@@ -24,4 +24,5 @@ class App:
     def run(self):
         print("run method in app instance start")
         self.__register_blueprints()
-        self.__app.run(host="0.0.0.0",port=8000)
+        # self.__app.run(host="0.0.0.0",port=8000)
+        self.__app.run()
