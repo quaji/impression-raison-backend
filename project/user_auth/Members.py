@@ -22,6 +22,14 @@ class Members:
         self.cursor = self.conn.cursor()
 
     def __sign(self):
+        @self.__blueprint.route('/auth', methods=['GET'])
+        def authorization():
+            return jsonify({"message":"hello"})
+            # if "uid" in session:
+            #     return jsonify({"uid":session["uid"]})
+            # else:
+            #     return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
+        
         @self.__blueprint.route('/auth', methods=['POST'])
         def authentication():
             try:
@@ -44,13 +52,7 @@ class Members:
             except Exception as e:
                 return jsonify({'message': f'Error occurred: {str(e)}'}), 1001
 
-        @self.__blueprint.route('/auth', methods=['GET'])
-        def authorization():
-            return jsonify({"message":"hello"})
-            # if "uid" in session:
-            #     return jsonify({"uid":session["uid"]})
-            # else:
-            #     return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
+
 
         @self.__blueprint.route('/in', methods=['POST'])
         def signin():
