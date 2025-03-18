@@ -46,10 +46,11 @@ class Members:
 
         @self.__blueprint.route('/auth', methods=['GET'])
         def authorization():
-            if "uid" in session:
-                return jsonify({"uid":session["uid"]})
-            else:
-                return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
+            return jsonify({"message":"hello"})
+            # if "uid" in session:
+            #     return jsonify({"uid":session["uid"]})
+            # else:
+            #     return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
 
         @self.__blueprint.route('/in', methods=['POST'])
         def signin():
