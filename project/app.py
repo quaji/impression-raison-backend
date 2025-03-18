@@ -15,5 +15,6 @@ class App:
         self.__members = Members()
 
     def run(self):
+        self.__wake_up()
         print("run method in app instance start")
         self.__app.run(host="0.0.0.0",port=8000)
