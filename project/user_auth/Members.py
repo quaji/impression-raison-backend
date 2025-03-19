@@ -27,7 +27,8 @@ class Members:
             if "uid" in session:
                 return jsonify({"uid":session["uid"]}),200
             else:
-                return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
+                # return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
+                return jsonify({'uid':0}),201
         
         @self.__blueprint.route('/auth', methods=['POST'])
         def authentication():
