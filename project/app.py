@@ -19,7 +19,10 @@ class App:
         for key in self.blueprints:
             self.__app.register_blueprint(self.blueprints[key])
     
-    
+    def __connect_test(self):
+        @self.__app.route('/',methods=['GET'])
+        def get_test():
+            return jsonify({"message":"we can get"}),200
 
     def run(self):
         print("run method in app instance start")
