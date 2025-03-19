@@ -14,18 +14,19 @@ class App:
         # blueprintManager の設定
         self.blueprintManager = BlueprintManager()
         self.blueprints = self.blueprintManager.get_blueprints()
+        self.__register_blueprints()
     
     def __register_blueprints(self):
         for key in self.blueprints:
             self.__app.register_blueprint(self.blueprints[key])
     
+    def get_app(self):
+        return self.__app
+
     def __connect_test(self):
         @self.__app.route('/',methods=['GET'])
         def get_test():
             return jsonify({"message":"we can get"}),200
 
     def run(self):
-        print("run method in app instance start")
-        self.__register_blueprints()
-        # self.__app.run(host="0.0.0.0",port=8000)
         self.__app.run()
