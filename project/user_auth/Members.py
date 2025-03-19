@@ -5,7 +5,6 @@ import pyodbc
 class Members:
     def __init__(self):
         self.__blueprint = Blueprint('sign', __name__, url_prefix='/sign')
-        # CORS(self.__blueprint,origins=["https://your-frontend-app.azurewebsites.net"])
         self.__setDBStatus()
         self.__sign()
 
@@ -24,11 +23,11 @@ class Members:
     def __sign(self):
         @self.__blueprint.route('/auth', methods=['GET'])
         def authorization():
-            return jsonify({"message":"hello"}),200
-            # if "uid" in session:
-            #     return jsonify({"uid":session["uid"]})
-            # else:
-            #     return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
+            # return jsonify({"message":"hello"}),200
+            if "uid" in session:
+                return jsonify({"uid":session["uid"]})
+            else:
+                return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
         
         @self.__blueprint.route('/auth', methods=['POST'])
         def authentication():

@@ -23,10 +23,6 @@ class App:
     def get_app(self):
         return self.__app
 
-    def __connect_test(self):
-        @self.__app.route('/',methods=['GET'])
-        def get_test():
-            return jsonify({"message":"we can get"}),200
 
     def run(self):
         self.__app.run()
