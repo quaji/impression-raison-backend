@@ -23,12 +23,10 @@ class Members:
     def __sign(self):
         @self.__blueprint.route('/auth', methods=['GET'])
         def authorization():
-            # return jsonify({"message":"hello"}),200
             if "uid" in session:
-                return jsonify({"uid":session["uid"]}),200
+                return jsonify({'uid':session["uid"],'link':"https://lemon-water-022469c10.6.azurestaticapps.net/mainpage"}),200
             else:
-                # return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
-                return jsonify({'uid':0}),201
+                return jsonify({'uid':0,'link':"https://lemon-water-022469c10.6.azurestaticapps.net/authentication"}),201
         
         @self.__blueprint.route('/auth', methods=['POST'])
         def authentication():
@@ -46,9 +44,9 @@ class Members:
                 existingData = self.cursor.fetchone()
                 if existingData:
                     session["email"] = existingData.email
-                    return redirect("https://passwordを認証するページ")
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'})
                 else:
-                    return redirect("https://passwordを設定するページ")
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signup'})
             except Exception as e:
                 return jsonify({'message': f'Error occurred: {str(e)}'}), 1001
 
@@ -58,7 +56,7 @@ class Members:
         def signin():
             try:
                 if "email" not in session:
-                    return redirect("https://emailを入力するページ")
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'}),202
 
                 usrPass: dict = request.get_json()
                 password: str = usrPass["password"]
@@ -74,7 +72,7 @@ class Members:
                 if existingData:
                     session["uid"] = existingData.uid
                     session["name"] = existingData.name
-                    return redirect("https://example.com/mainpage")
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/mainpage'})
                 else:
                     return jsonify({"message": "Password doesn't match"}), 1002
             except Exception as e:
