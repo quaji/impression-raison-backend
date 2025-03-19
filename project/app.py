@@ -9,7 +9,7 @@ class App:
         print("app instance generate.")
         # flaskのメインフレーム起動
         self.__app = Flask(__name__)
-        CORS(self.__app,origins=["https://your-frontend-app.azurewebsites.net"])
+        CORS(self.__app,origins=["https://https://lemon-water-022469c10.6.azurestaticapps.net/"])
         self.__app.debug = debugMode
         # blueprintManager の設定
         self.blueprintManager = BlueprintManager()

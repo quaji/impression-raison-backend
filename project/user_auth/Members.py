@@ -25,7 +25,7 @@ class Members:
         def authorization():
             # return jsonify({"message":"hello"}),200
             if "uid" in session:
-                return jsonify({"uid":session["uid"]})
+                return jsonify({"uid":session["uid"]}),200
             else:
                 return redirect("https://lemon-water-022469c10.6.azurestaticapps.net/authentication")
         
