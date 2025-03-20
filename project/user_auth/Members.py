@@ -24,9 +24,9 @@ class Members:
         @self.__blueprint.route('/auth', methods=['GET'])
         def authorization():
             if "uid" in session:
-                return jsonify({'uid':session["uid"],'link':"https://lemon-water-022469c10.6.azurestaticapps.net/mainpage"}),200
+                return jsonify({'uid':session["uid"],'link':"https://lemon-water-022469c10.6.azurestaticapps.net/home"}),200
             else:
-                return jsonify({'uid':0,'link':"https://lemon-water-022469c10.6.azurestaticapps.net/authentication"}),201
+                return jsonify({'uid':0,'link':None}),201
         
         @self.__blueprint.route('/auth', methods=['POST'])
         def authentication():
@@ -44,9 +44,9 @@ class Members:
                 existingData = self.cursor.fetchone()
                 if existingData:
                     session["email"] = existingData.email
-                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'})
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'}),200
                 else:
-                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signup'})
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signup'}),200
             except Exception as e:
                 return jsonify({'message': f'Error occurred: {str(e)}'}), 1001
 
@@ -72,8 +72,45 @@ class Members:
                 if existingData:
                     session["uid"] = existingData.uid
                     session["name"] = existingData.name
-                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/mainpage'})
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/home'})
                 else:
                     return jsonify({"message": "Password doesn't match"}), 1002
             except Exception as e:
                 return jsonify({"message": f"Error occurred: {str(e)}"}), 1003
+        
+        @self.__blueprint.route('/up', methods=['POST'])
+        def signup():
+            try:
+                if "email" not in session:
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'}),202
+
+                # username,password登録フェーズ
+                usrPass: dict = request.get_json()
+                password: str = usrPass["password"]
+                username: str = usrPass["username"]
+
+                SQLquery="""
+                    データを入力するSQLの記述をする
+                """
+
+                self.cursor.execute(SQLquery,(session['email'],password,username,))
+
+                # UIDの取得フェーズ
+                SQLquery = """
+                    SELECT *
+                    FROM Members
+                    WHERE email=? AND password=?
+                """
+
+                self.cursor.execute(SQLquery, (session["email"], password,))
+                existingData = self.cursor.fetchone()
+
+                if existingData:
+                    session["email"] = existingData.email
+                    session["uid"] = existingData.uid
+                    session["name"] = existingData.name
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/home'})
+                else:
+                    return jsonify({"message": "Password doesn't register"}), 1002
+            except Exception as e:
+                return jsonify({"message": f"Error occurred: {str(e)}"}), 1004
