@@ -45,7 +45,6 @@ class Members:
                 # print(f"existingData: {existingData} (type: {type(existingData)})")
 
                 if existingData:
-                    print("existingData evaluates to True!")
                     session["email"] = existingData.email
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'}),200
                 else:
