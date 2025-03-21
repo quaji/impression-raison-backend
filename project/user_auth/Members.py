@@ -42,13 +42,11 @@ class Members:
 
                 self.cursor.execute(SQLquery, (email,))
                 existingData = self.cursor.fetchone()
-                # print(f"existingData: {existingData} (type: {type(existingData)})")
 
                 if existingData:
                     session["email"] = existingData.email
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'}),200
                 else:
-                    print("existingData evaluates to False!")
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signup'}),200
             except Exception as e:
                 return jsonify({'message': f'Error occurred: {str(e)}'}), 500
