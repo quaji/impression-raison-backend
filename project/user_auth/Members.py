@@ -75,9 +75,9 @@ class Members:
                     session["name"] = existingData.name
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/home'})
                 else:
-                    return jsonify({"message": "Password doesn't match"}), 1002
+                    return jsonify({"message": "Password doesn't match"}), 201
             except Exception as e:
-                return jsonify({"message": f"Error occurred: {str(e)}"}), 1003
+                return jsonify({"message": f"Error occurred: {str(e)}"}), 500
         
         @self.__blueprint.route('/up', methods=['POST'])
         def signup():
@@ -112,6 +112,6 @@ class Members:
                     session["name"] = existingData.name
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/home'})
                 else:
-                    return jsonify({"message": "Password doesn't register"}), 1002
+                    return jsonify({"message": "Password doesn't register"}), 201
             except Exception as e:
-                return jsonify({"message": f"Error occurred: {str(e)}"}), 1004
+                return jsonify({"message": f"Error occurred: {str(e)}"}), 500
