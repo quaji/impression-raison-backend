@@ -1,4 +1,4 @@
 from project.app import App
 
-appInstance = App(True)
+appInstance = App(False)
 app = appInstance.get_app()
