@@ -28,6 +28,8 @@ class Members:
         randnum = secrets.randbelow(9000) + 1000
         session['tempCode'] = randnum
         from_email = os.getenv('AUTO_MAIL')
+
+        print("make code")
         
         body =f"""
         impression-raison にメールアドレスでサインアップしている方にこのメールは自動送信されています。
@@ -38,17 +40,27 @@ class Members:
 
         ページをリロードした場合、一時コードが再設定およびメールが再送されます。
         """
+        print("make body")
+
         message = MIMEText(body)
         message['Subject'] = 'impression-raison 登録確認メールの送信'
         message['From'] = from_email
         message['To'] = to_email
         password = os.getenv('PASSWORD_AUTO_MAIL')
+        print("make mail")
+        
 
         server = smtplib.SMTP('smtp.gmail.com',587)
+        print("make code")
+
         server.starttls()
+        print("make code")
         server.login(from_email,password)
+        print("make code")
         server.send_message(message)
+        print("make code")
         server.quit()
+        print("make code")
         session.modified = True
 
 
