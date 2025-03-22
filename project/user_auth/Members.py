@@ -5,6 +5,7 @@ import smtplib
 from email.mime.text import MIMEText
 import secrets
 import os
+import bcrypt
 
 class Members:
     def __init__(self):
@@ -114,25 +115,30 @@ class Members:
         def signin():
             try:
                 if "email" not in session:
-                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'}),202
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/authentication'}),202
 
                 usrPass: dict = request.get_json()
                 password: str = usrPass["password"]
 
+
+
                 SQLquery = """
                     SELECT *
                     FROM Members
-                    WHERE email=? AND password=?
+                    WHERE email=?
                 """
 
-                self.cursor.execute(SQLquery, (session["email"], password,))
+                self.cursor.execute(SQLquery, (session["email"], ))
                 existingData = self.cursor.fetchone()
+
                 if existingData:
-                    session["uid"] = existingData.uid
-                    session["name"] = existingData.name
-                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/home'})
+                    if bcrypt.checkpw(password.encode('utf-8'), existingData.password.encode('utf-8')):
+                        session["uid"] = existingData.uid
+                        session["name"] = existingData.name
+                        session.modified = True
+                        return jsonify({'message':"Welcome back !!",'link':'https://lemon-water-022469c10.6.azurestaticapps.net/home'}),200
                 else:
-                    return jsonify({"message": "Password doesn't match"}), 201
+                    return jsonify({"message": "Password doesn't match"}), 401
             except Exception as e:
                 return jsonify({"message": f"Error occurred: {str(e)}"}), 500
         
@@ -142,34 +148,47 @@ class Members:
         def signup():
             try:
                 if "email" not in session:
-                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'}),202
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/authentication'}),202
 
                 # username,password登録フェーズ
                 usrPass: dict = request.get_json()
+                tempCode :int = int(usrPass["tempcode"])
                 password: str = usrPass["password"]
                 username: str = usrPass["username"]
 
-                SQLquery="""
-                    データを入力するSQLの記述をする
-                """
+                if tempCode != session['tempCode']:
+                    return jsonify({"message" : "tempCode dont match",'link':None}),200
 
-                self.cursor.execute(SQLquery,(session['email'],password,username,))
+                hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+                SQLquery="""
+                    INSERT
+                    INTO Members(email, password, name)
+                    VALUES (?,?,?)
+                """
+                self.cursor.execute(SQLquery,(session['email'],hashed_password,username,))
+                self.cursor.connection.commit()
+
 
                 # UIDの取得フェーズ
                 SQLquery = """
                     SELECT *
                     FROM Members
-                    WHERE email=? AND password=?
+                    WHERE email=?
                 """
 
-                self.cursor.execute(SQLquery, (session["email"], password,))
+                self.cursor.execute(SQLquery, (session["email"],))
                 existingData = self.cursor.fetchone()
 
                 if existingData:
-                    session["email"] = existingData.email
-                    session["uid"] = existingData.uid
-                    session["name"] = existingData.name
-                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/home'})
+                    if bcrypt.checkpw(password.encode('utf-8'),existingData.password.encode('utf-8')):
+                        session["email"] = existingData.email
+                        session["uid"] = existingData.uid
+                        session["name"] = existingData.name
+                        session.modified = True
+                        return jsonify({'message':"Welcome to Raison !!!!",'link':'https://lemon-water-022469c10.6.azurestaticapps.net/home'}),200
+                    else :
+                        return jsonify({"message":"Fail insert data and auth your password. can you tell us taking care about this error on Email."}),401
                 else:
                     return jsonify({"message": "Password doesn't register"}), 201
             except Exception as e:
