@@ -47,9 +47,10 @@ class Members:
 
                 print(f'done sql query')
 
+                session["email"] = existingData.email
+
                 if existingData:
                     print(f'data existing: {existingData}')
-                    session["email"] = existingData.email
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'}),200
                 else:
                     print(f'data not existing')
