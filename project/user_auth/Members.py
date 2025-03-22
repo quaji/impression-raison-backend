@@ -51,6 +51,7 @@ class Members:
                 if existingData is None:
                     print(f'data not existing')
                     session["email"] = email
+                    print(f'data not existing')
                     session.modified = True
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signup'}),200
                 else:
