@@ -11,6 +11,13 @@ class App:
         self.__app = Flask(__name__)
         CORS(self.__app,origins=["https://https://lemon-water-022469c10.6.azurestaticapps.net/"])
         self.__app.debug = debugMode
+        self.__app.secret_key = 'url1bba'
+        self.__app.config.update(
+            SESSION_COOKIE_SECURE=True,  # HTTPSでのみCookieを送信
+            SESSION_COOKIE_HTTPONLY=True, # JavaScriptからのアクセスを防止
+            SESSION_COOKIE_SAMESITE='Lax' # サイト間リクエスト対策
+        )
+
         # blueprintManager の設定
         self.blueprintManager = BlueprintManager()
         self.blueprints = self.blueprintManager.get_blueprints()
