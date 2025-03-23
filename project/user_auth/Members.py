@@ -150,18 +150,21 @@ class Members:
         @self.__blueprint.route('/up', methods=['POST'])
         def signup():
             try:
-
+                print("O1")
                 # username,password登録フェーズ
                 usrPass: dict = request.get_json()
                 tempCode :int = int(usrPass["tempcode"])
                 password: str = usrPass["password"]
                 username: str = usrPass["username"]
+                print("O2")
 
                 print("s:",session["email"])
 
+                print("O3")
 
                 if tempCode != session['tempCode']:
                     return jsonify({"message" : "tempCode dont match",'link':None}),200
+                print("O4")
 
                 if session["email"] == None:
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/authentication'}),202
