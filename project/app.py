@@ -1,5 +1,6 @@
 from flask import *
 from flask_cors import *
+# from flask_session import *
 from project.BlueprintManager import BlueprintManager
 from datetime import timedelta
 
@@ -10,11 +11,11 @@ class App:
         print("app instance generate.")
         # flaskのメインフレーム起動
         self.__app = Flask(__name__)
-        CORS(self.__app,origins=["https://https://lemon-water-022469c10.6.azurestaticapps.net/"])
+        CORS(self.__app,origins=["https://lemon-water-022469c10.6.azurestaticapps.net/"],supports_credentials=True)
         self.__app.debug = debugMode
         self.__app.secret_key = 'url1bba'
         self.__app.config.update(
-            SESSION_COOKIE_SECURE=False,  # HTTPSでのみCookieを送信
+            SESSION_COOKIE_SECURE=True,  # HTTPSでのみCookieを送信
             SESSION_COOKIE_HTTPONLY=True, # JavaScriptからのアクセスを防止
             SESSION_COOKIE_SAMESITE='Lax', # サイト間リクエスト対策
             SESSION_PERMANENT = True,
