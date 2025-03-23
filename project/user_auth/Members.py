@@ -158,7 +158,7 @@ class Members:
                 username: str = usrPass["username"]
                 print("O2")
 
-                print("s:",session["email"])
+                print("s:",session)
 
                 print("O3")
 
@@ -203,4 +203,5 @@ class Members:
                 else:
                     return jsonify({"message": "Password doesn't register"}), 201
             except Exception as e:
+                print(str(e))
                 return jsonify({"message": f"Error occurred: {str(e)}"}), 500
