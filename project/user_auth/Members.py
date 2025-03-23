@@ -116,6 +116,7 @@ class Members:
         @self.__blueprint.route('/in', methods=['POST'])
         def signin():
             try:
+                print("s:",session["email"])
                 if "email" not in session:
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/authentication'}),202
 
