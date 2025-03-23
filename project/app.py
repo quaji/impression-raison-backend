@@ -13,7 +13,7 @@ class App:
         self.__app.debug = debugMode
         self.__app.secret_key = 'url1bba'
         self.__app.config.update(
-            SESSION_COOKIE_SECURE=True,  # HTTPSでのみCookieを送信
+            SESSION_COOKIE_SECURE=False,  # HTTPSでのみCookieを送信
             SESSION_COOKIE_HTTPONLY=True, # JavaScriptからのアクセスを防止
             SESSION_COOKIE_SAMESITE='Lax' # サイト間リクエスト対策
         )
