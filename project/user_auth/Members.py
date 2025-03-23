@@ -116,13 +116,13 @@ class Members:
         @self.__blueprint.route('/in', methods=['POST'])
         def signin():
             try:
-                print("s:",session["email"])
-                if "email" not in session:
-                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/authentication'}),202
-
                 usrPass: dict = request.get_json()
                 password: str = usrPass["password"]
 
+                print("s:",session["email"])
+
+                if session["email"] == None:
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/authentication'}),202
 
 
                 SQLquery = """
@@ -150,8 +150,6 @@ class Members:
         @self.__blueprint.route('/up', methods=['POST'])
         def signup():
             try:
-                if "email" not in session:
-                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/authentication'}),202
 
                 # username,password登録フェーズ
                 usrPass: dict = request.get_json()
@@ -159,8 +157,15 @@ class Members:
                 password: str = usrPass["password"]
                 username: str = usrPass["username"]
 
+                print("s:",session["email"])
+
+
                 if tempCode != session['tempCode']:
                     return jsonify({"message" : "tempCode dont match",'link':None}),200
+
+                if session["email"] == None:
+                    return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/authentication'}),202
+
 
                 hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
