@@ -16,7 +16,7 @@ class App:
         self.__app.secret_key = 'url1bba'
         self.__app.config.update(
             SESSION_TYPE="filesystem",
-            SESSIOM_FILE_DIR="/project/flask_session",
+            SESSION_FILE_DIR="/project/flask_session",
             SESSION_PERMANENT = True,
             SESSION_COOKIE_SECURE=True,  # HTTPSでのみCookieを送信
             SESSION_COOKIE_HTTPONLY=True, # JavaScriptからのアクセスを防止
