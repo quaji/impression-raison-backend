@@ -153,7 +153,7 @@ class Members:
                 print("O1")
                 # username,password登録フェーズ
                 usrPass: dict = request.get_json()
-                tempCode :int = int(usrPass["tempcode"])
+                tempCode :int = int(usrPass["tempCode"])
                 password: str = usrPass["password"]
                 username: str = usrPass["username"]
                 print("O2")
