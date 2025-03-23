@@ -99,14 +99,14 @@ class Members:
                     print(f'data not existing')
                     session["email"] = str(email)
                     session.modified = True
-                    print(session["email"])
+                    print("s:",session["email"])
                     self.__send_check_mail(email)
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signup'}),200
                 else:
                     print(f'data existing: {existingData}')
                     session["email"] = str(existingData.email)
                     session.modified = True
-                    print(session["email"])
+                    print("s:",session["email"])
                     return jsonify({'link':'https://lemon-water-022469c10.6.azurestaticapps.net/signin'}),200
             except Exception as e:
                 return jsonify({'message': f'Error occurred: {str(e)}'}), 500
