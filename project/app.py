@@ -1,6 +1,7 @@
 from flask import *
 from flask_cors import *
 from project.BlueprintManager import BlueprintManager
+from datetime import timedelta
 
 class App:
     __app :Flask
@@ -15,7 +16,9 @@ class App:
         self.__app.config.update(
             SESSION_COOKIE_SECURE=False,  # HTTPSでのみCookieを送信
             SESSION_COOKIE_HTTPONLY=True, # JavaScriptからのアクセスを防止
-            SESSION_COOKIE_SAMESITE='Lax' # サイト間リクエスト対策
+            SESSION_COOKIE_SAMESITE='Lax', # サイト間リクエスト対策
+            SESSION_PERMANENT = True,
+            PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)
         )
 
         # blueprintManager の設定
