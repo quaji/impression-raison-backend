@@ -1,6 +1,6 @@
 from flask import *
 from flask_cors import *
-# from flask_session import *
+from flask_session import *
 from project.BlueprintManager import BlueprintManager
 from datetime import timedelta
 
@@ -21,6 +21,7 @@ class App:
             SESSION_PERMANENT = True,
             PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)
         )
+        Session(self.__app)
 
         # blueprintManager の設定
         self.blueprintManager = BlueprintManager()
