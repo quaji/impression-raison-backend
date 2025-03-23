@@ -23,12 +23,13 @@ class App:
             SESSION_COOKIE_SAMESITE='Lax', # サイト間リクエスト対策
             PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)
         )
-        Session(self.__app)
-
         # blueprintManager の設定
         self.blueprintManager = BlueprintManager()
         self.blueprints = self.blueprintManager.get_blueprints()
         self.__register_blueprints()
+
+        Session(self.__app)
+
     
     def __register_blueprints(self):
         for key in self.blueprints:
